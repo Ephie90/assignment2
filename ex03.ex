@@ -37,6 +37,12 @@ defmodule Ex03 do
   Use no library functions unless explicitly noted.
   """
 
+  def reduce([ h | t ],  func),        do: reduce(t, h, func)
+  def reduce([ ], state, _func),       do: state
+  def reduce([ h | t ], state, func),  do: reduce(t, func.(h, state), func)
+  def reverse(list),                   do: reduce(list, [], &[&1|&2])
+  
+
   ##############################################################################
   # 3.1:  5 points #
   ##################
@@ -54,8 +60,20 @@ defmodule Ex03 do
   be used if needed.)
 
   """
+  def odd_even (list) do 
+      reduce(list, [], &odd_even_atom/2) |> reverse
+  end
 
-  def odd_even . . . "your code"
+  defp odd_even_atom(value, result) do
+    cond do
+      Integer.is_even(value) ->
+        [:even | result]
+      Integer.is_odd(value) ->
+        [:odd | result]
+      true ->
+        result
+    end
+  end
 
 
   ##############################################################################
@@ -77,7 +95,15 @@ defmodule Ex03 do
 
   """
 
-  def list_contains . .. "your code"
+  def list_contains(collection, value) do
+    cond do 
+      value in collection ->
+        true
+      true ->
+        false
+      end
+  end
+
 
   ##############################################################################
   # 3.3:  5 points #
@@ -100,8 +126,21 @@ defmodule Ex03 do
       false
 
   """
+  def map([], _func) do
+    []
+  end
 
-  def list_equal . . . "your code"
+  def map([h | t], func) do
+    [func.(h) | map(t, func)]
+  end
+
+  def list_equal(a, b) do
+     if a = b do
+       true
+     else
+      false
+     end
+  end
 
 
 
@@ -149,7 +188,7 @@ defmodule Ex03 do
   Think a little about a nice way to lay this code out.
   """
 
-  def won . . . "your code"
+ # def won . . . "your code"
 
 
   ###########################
